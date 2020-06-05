@@ -1,0 +1,33 @@
+{% extends "blog/base.html" %}
+{% load blog_tags %}
+{% block title %}My Blog{% endblock %}
+
+{% block content %}
+  {% if tag %}
+    <h2>Posts tagged with "{{ tag.name }}"</h2>
+  {% endif %}
+  {% for post in posts %}
+    <h2>
+      <a href="{{ post.get_absolute_url }}">
+        {{ post.title }}
+      </a>
+    </h2>
+    <p class="tags">
+      Tags:
+      {% for tag in post.tags.all %}
+        <a href="{% url "blog:post_list_by_tag" tag.slug %}">
+          {{ tag.name }}
+        </a>
+        {% if not forloop.last %}, {% endif %}
+      {% endfor %}
+    </p>
+    <p class="date">
+      Published {{ post.publish }} by {{ post.author }}
+    </p>
+    {{ post.body|markdown|truncatewords_html:100 }}
+  {% endfor %}
+  {% include "pagination.html" with page=posts %}
+    <footer class="py-3 bg-grey">
+            <p class="m-0 text-dark text-center ">Copyright &copy; bhumicha</p>
+        </footer>
+{% endblock %}

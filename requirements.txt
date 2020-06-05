@@ -1,0 +1,5 @@
+pip install Django==2.0.5
+pip install pytz
+pip install django-taggit
+pip install psycopg2
+pip install Markdown==2.6.11
